@@ -41,7 +41,7 @@ exports.oauthCallback = function (strategy) {
           return res.redirect('/');
         }
 
-        return res.redirect(redirectURL || '/account');
+        return res.redirect(redirectURL || '/account/user');
       });
     })(req, res, next);
   };

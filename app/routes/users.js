@@ -6,6 +6,6 @@ var account = require('../controllers/account'),
   router = express.Router();
 
 /* GET users listing. */
-router.get('/account', authentication.requiresLogin, account.me );
+router.get('/user', authentication.requiresLogin, account.me );
 
 module.exports = router;
