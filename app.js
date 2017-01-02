@@ -1,4 +1,5 @@
-var bodyParser = require('body-parser'), 
+var authentication = require('./app/controllers/authentication'), 
+  bodyParser = require('body-parser'), 
   cookieParser = require('cookie-parser'),
   config = require('./config/config'),
   express = require('express'),
@@ -56,7 +57,7 @@ var bodyParser = require('body-parser'),
       };
 
       // Save the user OAuth profile
-      // authentication.saveOAuthUserProfile(req, providerUserProfile, done);
+      authentication.saveOAuthUserProfile(req, providerUserProfile, done);
     }
   )); 
 
