@@ -9,6 +9,8 @@ var authentication = require('./app/controllers/authentication'),
   morgan = require('morgan'),
   passport = require('passport'),
   path = require('path'),
+  session        = require('express-session'),
+  MongoStore     = require('connect-mongo')(session),
   User = require('./app/models/user.js'),
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuthStrategy,
@@ -202,6 +204,16 @@ app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 app.disable('x-powered-by');
+
+// Express MongoDB session storage
+app.use(session({
+  secret: '1234567890QWERTY',
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  }),
+  resave: true,
+  saveUninitialized: true
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
