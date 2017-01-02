@@ -1,11 +1,11 @@
 'use strict';
 
-var express = require('express'),
+var account = require('../controllers/account'),
+  authentication = require('../controllers/authentication'), 
+  express = require('express'),
   router = express.Router();
 
 /* GET users listing. */
-router.get('/users', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/account', authentication.requiresLogin, account.me );
 
 module.exports = router;

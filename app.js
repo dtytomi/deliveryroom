@@ -1,6 +1,7 @@
 var authentication = require('./app/controllers/authentication'), 
   bodyParser = require('body-parser'), 
   cookieParser = require('cookie-parser'),
+  cors = require('cors'),
   config = require('./config/config'),
   express = require('express'),
   favicon = require('serve-favicon'),
@@ -154,10 +155,10 @@ var index = require('./app/routes/core'),
 var app = express();
 
 // Showing stack errors
-  app.set('showStackErrror', true);
+app.set('showStackErrror', true);
 
-  // Enable jsonp
-  app.enable('jsonp callback');
+// Enable jsonp
+app.enable('jsonp callback');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app', 'views'));
@@ -185,6 +186,16 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
+// use cors
+app.use(cors());
+app.use(function(req, res, next) {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+    res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token');
+
+    next();
+});
+
 // Use helmet to secure Express headers
 app.use(helmet.frameguard());
 app.use(helmet.xssFilter());
@@ -198,7 +209,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/users', users);
+app.use('/account', users);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

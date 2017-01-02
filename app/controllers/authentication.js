@@ -13,6 +13,13 @@ exports.signout = function (req, res) {
 };
 
 /**
+ * Send User
+ */
+exports.me = function (req, res) {
+  res.json(req.user || null);
+};
+
+/**
  * Require login routing middleware
  */
 exports.requiresLogin = function(req, res, next) {
@@ -33,15 +40,15 @@ exports.oauthCallback = function (strategy) {
     passport.authenticate(strategy, function(err, user, redirectURL) {
       if (err || !user) {
         logger.error(err);
-        return res.redirect('/login');
+        return res.redirect('/');
       }
       req.login(user, function(err) {
         if (err) {
           logger.error(err);
-          return res.redirect('/login');
+          return res.redirect('/');
         }
 
-        return res.redirect(redirectURL || '/');
+        return res.redirect(redirectURL || '/user');
       });
     })(req, res, next);
   };
