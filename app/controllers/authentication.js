@@ -13,13 +13,6 @@ exports.signout = function (req, res) {
 };
 
 /**
- * Send User
- */
-exports.me = function (req, res) {
-  res.json(req.user || null);
-};
-
-/**
  * Require login routing middleware
  */
 exports.requiresLogin = function(req, res, next) {
@@ -48,7 +41,7 @@ exports.oauthCallback = function (strategy) {
           return res.redirect('/');
         }
 
-        return res.redirect(redirectURL || '/user');
+        return res.redirect(redirectURL || '/account');
       });
     })(req, res, next);
   };
