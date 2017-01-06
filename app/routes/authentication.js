@@ -14,10 +14,10 @@ router.get('/signout', authentication.signout);
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email']
 }));
-router.get('/facebook/callback', { failureRedirect: '/' }),
+router.get('/facebook/callback', passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/account/user');
+    res.redirect('/');
   });
 router.get('/instagram', passport.authenticate('instagram'));
 router.get('/instagram/callback', authentication.oauthCallback('instagram'));
