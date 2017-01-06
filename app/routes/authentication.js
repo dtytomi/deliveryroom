@@ -14,7 +14,7 @@ router.get('/signout', authentication.signout);
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email']
 }));
-router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/account/user',
+router.get('/facebook/callback', passport.authenticate('facebook-token', { successRedirect: '/account/user',
   failureRedirect: '/' }));
 router.get('/instagram', passport.authenticate('instagram'));
 router.get('/instagram/callback',  passport.authenticate('twitter', { successRedirect: '/account/user',
@@ -31,8 +31,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
     res.redirect('/account/user');
   });
 router.get('/twitter', passport.authenticate('twitter'));
-router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/account/user');
-  });
+router.get('/twitter/callback', passport.authenticate('twitter', { 
+  successRedirect: '/account/user',
+  failureRedirect: '/' }),
+  function(req, res) {});
