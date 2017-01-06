@@ -10,11 +10,15 @@ module.exports = function (app) {
 };
 
 router.get('/signout', authentication.signout);
-
+ 
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email']
 }));
-router.get('/facebook/callback', authentication.oauthCallback('facebook'));
+router.get('/facebook/callback', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/account/user');
+  });
 router.get('/instagram', passport.authenticate('instagram'));
 router.get('/instagram/callback', authentication.oauthCallback('instagram'));
 router.get('/google', passport.authenticate('google', {
