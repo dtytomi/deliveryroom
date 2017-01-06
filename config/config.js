@@ -9,7 +9,7 @@ var config = {
       name: 'server'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://127.0.0.1:27017/server-development',
+    db:  process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/server-development',
     facebook: {
       clientID: process.env.FACEBOOK_ID || 'FACEBOOK_ID',
       clientSecret: process.env.FACEBOOK_SECRET || 'FACEBOOK_SECRET',
