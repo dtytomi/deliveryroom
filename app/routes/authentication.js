@@ -10,21 +10,13 @@ module.exports = function (app) {
 };
 
 router.get('/signout', authentication.signout);
- 
+
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email']
 }));
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/account/user');
-  });
+router.get('/facebook/callback', authentication.oauthCallback('facebook'));
 router.get('/instagram', passport.authenticate('instagram'));
-router.get('/instagram/callback',  passport.authenticate('instagram', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/account/user');
-  });
+router.get('/instagram/callback', authentication.oauthCallback('instagram'));
 router.get('/google', passport.authenticate('google', {
   scope: [
     'https://www.googleapis.com/auth/plus.login',
@@ -32,14 +24,6 @@ router.get('/google', passport.authenticate('google', {
     'https://www.googleapis.com/auth/userinfo.email'
   ]
 }));
-router.get('/google/callback',  passport.authenticate('google', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/account/user');
-  });
+router.get('/google/callback', authentication.oauthCallback('google'));
 router.get('/twitter', passport.authenticate('twitter'));
-router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/account/user');
-  });
+router.get('/twitter/callback', authentication.oauthCallback('twitter'));
