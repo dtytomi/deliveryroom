@@ -10,4 +10,4 @@ module.exports = function (app) {
   app.use('/account', router);
 };
 
-router.get('/user', authentication.requiresLogin, account.me );
+router.get('/user', account.me );
