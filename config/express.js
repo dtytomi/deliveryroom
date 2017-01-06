@@ -46,6 +46,7 @@ module.exports = function(app, config) {
       clientSecret: config.facebook.clientSecret,
       callbackURL: config.facebook.callbackURL,
       passReqToCallback: true
+      profileFields: ['id', 'emails', 'name'] 
     },
 
     function(req, accessToken, refreshToken, profile, done) {
