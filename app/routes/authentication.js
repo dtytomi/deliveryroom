@@ -11,10 +11,12 @@ module.exports = function (app) {
 
 router.get('/signout', authentication.signout);
 
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['email']
+}));
+router.get('/facebook/callback', authentication.oauthCallback('facebook'));
 router.get('/instagram', passport.authenticate('instagram'));
 router.get('/instagram/callback', authentication.oauthCallback('instagram'));
-router.get('/twitter', passport.authenticate('twitter'));
-router.get('/twitter/callback', authentication.oauthCallback('twitter'));
 router.get('/google', passport.authenticate('google', {
   scope: [
     'https://www.googleapis.com/auth/plus.login',
@@ -23,7 +25,5 @@ router.get('/google', passport.authenticate('google', {
   ]
 }));
 router.get('/google/callback', authentication.oauthCallback('google'));
-router.get('/facebook', passport.authenticate('facebook', {
-  scope: ['email']
-}));
-router.get('/facebook/callback', authentication.oauthCallback('facebook'));
+router.get('/twitter', passport.authenticate('twitter'));
+router.get('/twitter/callback', authentication.oauthCallback('twitter'));

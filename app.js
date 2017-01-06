@@ -1,4 +1,4 @@
-
+'use strict';
 
 var express = require('express'),
   config = require('./config/config'),
@@ -16,7 +16,3 @@ mongoose(function startServer () {
   });
 
 });
-
-
-
-

@@ -18,7 +18,7 @@ function createMongooseConnection (cb) {
 
   // create the database connection
   mongoose.connection.on('connected', function () {
-       logger.info('Mongoose connected to ' + config.db);
+    logger.info('Mongoose connected to ' + config.db);
   });
 
   // if the connection throws an error
@@ -46,4 +46,3 @@ function createMongooseConnection (cb) {
 }
 
 module.exports = createMongooseConnection;
-

@@ -7,7 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var passport = require('passport');
-var User = require('mongoose').model('User'), 
+var cors = require('cors'),
+  helmet = require('helmet'),
   methodOverride = require('method-override'),
   mongoose = require('mongoose'),
   session        = require('express-session'),
@@ -15,7 +16,8 @@ var User = require('mongoose').model('User'),
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuthStrategy,
   InstagramStrategy = require('passport-instagram').Strategy,
-  TwitterStrategy = require('passport-twitter').Strategy;
+  TwitterStrategy = require('passport-twitter').Strategy,
+  User = require('mongoose').model('User');
 
     
 
@@ -169,6 +171,23 @@ module.exports = function(app, config) {
   }));
   app.use(cookieParser());
   app.use(compress());
+
+  // use cors
+  app.use(cors());
+  app.use(function(req, res, next) {
+      res.set('Access-Control-Allow-Origin', '*');
+      res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+      res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token');
+
+      next();
+  });
+
+  // Use helmet to secure Express headers
+  app.use(helmet.frameguard());
+  app.use(helmet.xssFilter());
+  app.use(helmet.noSniff());
+  app.use(helmet.ieNoOpen());
+  app.disable('x-powered-by');
 
   // use passport session
   app.use(passport.initialize());
