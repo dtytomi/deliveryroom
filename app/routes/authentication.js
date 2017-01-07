@@ -2,7 +2,7 @@
 
 var passport = require('passport'),
   express = require('express'),
-  authentication = require('../controllers/authentication.js'),
+  authentication = require('../controllers/authentication'),
   router = express.Router();
 
 module.exports = function (app) {
