@@ -54,25 +54,25 @@ var config = {
     facebook: {
       clientID: process.env.FACEBOOK_ID || 'FACEBOOK_ID',
       clientSecret: process.env.FACEBOOK_SECRET || 'FACEBOOK_SECRET',
-      callbackURL: 'https://deliveryroom.herokuapp.com/auth/facebook/callback'
+      callbackURL: '/auth/facebook/callback'
     },
 
     twitter: {
       clientID: process.env.TWITTER_CONSUMER_KEY || 'TWITTER_CONSUMER_KEY',
       clientSecret: process.env.TWITTER_CONSUMER_SECRET || 'TWITTER_CONSUMER_SECRET',
-      callbackURL:  'https://deliveryroom.herokuapp.com/auth/twitter/callback'
+      callbackURL:  '/auth/twitter/callback'
     },
 
     google: {
       consumerKey: process.env.GOOGLE_CONSUMER_KEY || 'GOOGLE_CONSUMER_KEY',
       consumerSecret: process.env.GOOGLE_CONSUMER_SECRET || 'GOOGLE_CONSUMER_SECRET',
-      callbackURL: 'https://deliveryroom.herokuapp.com/auth/google/callback'
+      callbackURL: '/auth/google/callback'
     },
 
     instagram: {
       clientID: process.env.ClientID || 'INSTAGRAM_ID',
       clientSecret: process.env.ClientSecret || 'INSTAGRAM_SECRET',
-      callbackURL: 'https://deliveryroom.herokuapp.com/auth/instagram/callback' 
+      callbackURL: '/auth/instagram/callback' 
     }
   }
 };
