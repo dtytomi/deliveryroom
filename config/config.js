@@ -54,7 +54,7 @@ var config = {
     facebook: {
       clientID: process.env.FACEBOOK_ID || 'FACEBOOK_ID',
       clientSecret: process.env.FACEBOOK_SECRET || 'FACEBOOK_SECRET',
-      callbackURL: '/auth/facebook/callback'
+      callbackURL: 'https://deliveryroom.mybluemix.net/auth/facebook/callback'
     },
 
     twitter: {
