@@ -54,25 +54,25 @@ var config = {
     facebook: {
       clientID: process.env.FACEBOOK_ID || 'FACEBOOK_ID',
       clientSecret: process.env.FACEBOOK_SECRET || 'FACEBOOK_SECRET',
-      callbackURL: '/auth/facebook/callback'
+      callbackURL: 'https://deliveryroom.mybluemix.net/auth/facebook/callback'
     },
 
     twitter: {
       clientID: process.env.TWITTER_CONSUMER_KEY || 'TWITTER_CONSUMER_KEY',
       clientSecret: process.env.TWITTER_CONSUMER_SECRET || 'TWITTER_CONSUMER_SECRET',
-      callbackURL:  'https://deliveryroom.mybluemix.net//auth/twitter/callback'
+      callbackURL:  'https://deliveryroom.mybluemix.net/auth/twitter/callback'
     },
 
     google: {
       consumerKey: process.env.GOOGLE_CONSUMER_KEY || 'GOOGLE_CONSUMER_KEY',
       consumerSecret: process.env.GOOGLE_CONSUMER_SECRET || 'GOOGLE_CONSUMER_SECRET',
-      callbackURL: 'https://deliveryroom.mybluemix.net//auth/google/callback'
+      callbackURL: 'https://deliveryroom.mybluemix.net/auth/google/callback'
     },
 
     instagram: {
       clientID: process.env.ClientID || 'INSTAGRAM_ID',
       clientSecret: process.env.ClientSecret || 'INSTAGRAM_SECRET',
-      callbackURL: 'https://deliveryroom.mybluemix.net//auth/instagram/callback' 
+      callbackURL: 'https://deliveryroom.mybluemix.net/auth/instagram/callback' 
     }
   }
 };
