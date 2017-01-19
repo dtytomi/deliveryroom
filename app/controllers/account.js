@@ -8,5 +8,5 @@ exports.users = function (req, res) {
 };
 
 exports.me = function (req, res) {
-  res.render('account', { user: req.user || null });
+  res.jsonp(req.user || null);
 };
