@@ -10,4 +10,5 @@ module.exports = function (app) {
   app.use('/account', router);
 };
 
-router.get('/user', account.me );
+router.get('/users', account.users );
+router.get('/users/me', account.me );
