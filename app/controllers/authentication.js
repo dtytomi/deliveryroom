@@ -14,17 +14,16 @@ exports.signout = function (req, res) {
 };
 
 /**
- * Require login routing middleware
+ * getOauthToken 
  */
-exports.requiresLogin = function(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send({
-      message: 'User is not logged in'
-    });
-  }
+exports.getOauthToken = function (req, res, next) {
+  // body...
+  var userToken = req.query['accessToken'],
+    month = 43829,
+    server_token = jwt.sign({id: req.user.id}, "secret", {expiresInMinutes: month});
 
-  next();
-};
+  res.redirect('?oauth_token=' + server_token, '&userId=' + req.user.id);
+}
 
 /**
  * OAuth callback
