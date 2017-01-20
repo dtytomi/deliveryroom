@@ -19,10 +19,10 @@ router.get('/signout', authentication.signout);
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email']
 }));
-router.get('/facebook/callback', authentication.oauthCallback('facebook'));
+router.get('/facebook/callback', passport.authenticate('facebook'));
 router.get('/facebook/callback', authentication.getOauthToken);
 router.get('/instagram', passport.authenticate('instagram'));
-router.get('/instagram/callback',  authentication.oauthCallback('instagram'));
+router.get('/instagram/callback',  passport.authenticate('instagram'));
 router.get('/instagram/callback', authentication.getOauthToken);
 router.get('/google', passport.authenticate('google', {
   scope: [
@@ -31,10 +31,10 @@ router.get('/google', passport.authenticate('google', {
     'https://www.googleapis.com/auth/userinfo.email'
   ]
 }));
-router.get('/google/callback', authentication.oauthCallback('google'));
+router.get('/google/callback', passport.authenticate('google'));
 router.get('/google/callback', authentication.getOauthToken);
 router.get('/twitter', passport.authenticate('twitter'));
-router.get('/twitter/callback', authentication.oauthCallback('twitter'));
+router.get('/twitter/callback', passport.authenticate('twitter'));
 router.get('/twitter/callback', authentication.getToken);
 
 router.get('/user', account.user );
