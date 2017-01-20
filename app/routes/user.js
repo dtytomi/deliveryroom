@@ -35,7 +35,7 @@ router.get('/google/callback', authentication.oauthCallback('google'));
 router.get('/google/callback', authentication.getOauthToken);
 router.get('/twitter', passport.authenticate('twitter'));
 router.get('/twitter/callback', authentication.oauthCallback('twitter'));
-router.get('/twitter/callback', authentication.getOauthToken);
+router.get('/twitter/callback', authentication.getToken);
 
 router.get('/user', account.user );
 router.get('/users/me', account.me );
