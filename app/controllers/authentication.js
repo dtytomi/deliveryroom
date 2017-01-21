@@ -2,6 +2,7 @@
 
 var logger = require('mm-node-logger')(module),
   passport = require('passport'),
+  jwt = require('jsonwebtoken'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
