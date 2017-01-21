@@ -21,7 +21,7 @@ exports.getOauthToken = function (req, res, next) {
   // body...
   var userToken = req.query['accessToken'],
     month = 43829,
-    server_token = jwt.sign({id: req.user.id}, "secret", {expiresInMinutes: month});
+    server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
 
   res.redirect('?oauth_token=' + server_token, '&userId=' + req.user.id);
 }
