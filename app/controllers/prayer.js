@@ -4,9 +4,9 @@
  * Module dependencies
  */
 var path = require('path'),
-  logger = require('mm-node-logger')(module),
   mongoose = require('mongoose'),
-  Prayer = mongoose.model('Prayer');
+  Prayer = mongoose.model('Prayer'),
+  logger = require('mm-node-logger')(module);
 
 /**
  * Create an prayer
@@ -18,7 +18,7 @@ exports.create = function (req, res) {
   prayer.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: logger.error(err.message)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(prayer);
@@ -52,7 +52,7 @@ exports.update = function (req, res) {
   prayer.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: logger.error(err.message)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(prayer);
@@ -69,7 +69,7 @@ exports.delete = function (req, res) {
   prayer.remove(function (err) {
     if (err) {
       return res.status(400).send({
-        message:logger.error(err.message)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(prayer);
@@ -84,7 +84,7 @@ exports.list = function (req, res) {
   Prayer.find().sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
-        message: logger.error(err.message)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(prayers);
@@ -99,13 +99,24 @@ exports.listByCategory = function (req, res) {
   Prayer.find({ category: req.query.category }).sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
-        message: logger.error(err.message)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(prayers);
     }
   });
 };
+
+/**
+ * Prayer authorization middleware
+ */
+exports.hasAuthorization = function(req, res, next) {
+    if (req.prayer.user.id !== req.user.id) {
+        return res.send(403, 'User is not authorized');
+    }
+    next();
+};
+
 
 /**
  * Prayer middleware
@@ -129,14 +140,4 @@ exports.prayerByID = function (req, res, next, id) {
     req.prayer = prayer;
     next();
   });
-};
-
-/**
- * Prayer authorization middleware
- */
-exports.hasAuthorization = function(req, res, next) {
-    if (req.prayer.user.id !== req.user.id) {
-        return res.send(403, 'User is not authorized');
-    }
-    next();
 };

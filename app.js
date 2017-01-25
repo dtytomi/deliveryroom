@@ -11,6 +11,8 @@ mongoose(function startServer () {
 
   module.exports = require('./config/express')(app, config);
 
+  require('./config/passport')();
+
   app.listen(config.port, function () {
     logger.info('Express server listening on port ' + config.port);
   });

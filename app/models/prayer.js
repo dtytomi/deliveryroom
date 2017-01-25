@@ -4,7 +4,7 @@
  * Module dependencies
  */
 var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema;
+  Schema = mongoose.Schema;
 
 /**
  * Prayer Schema
@@ -36,6 +36,5 @@ var PrayerSchema = new Schema({
     ref: 'User'
   }
 });
-
 
 mongoose.model('Prayer', PrayerSchema);

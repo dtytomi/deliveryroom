@@ -2,6 +2,7 @@
 
 var logger = require('mm-node-logger')(module),
   passport = require('passport'),
+  // jwt = require('jsonwebtoken'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
@@ -14,17 +15,16 @@ exports.signout = function (req, res) {
 };
 
 /**
- * Require login routing middleware
+ * getOauthToken 
  */
-exports.requiresLogin = function(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send({
-      message: 'User is not logged in'
-    });
-  }
+exports.getOauthToken = function (req, res, next) {
+  // body...
+  // var userToken = req.query['accessToken'],
+  //   month = 43829,
+  //   server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
 
-  next();
-};
+  // res.redirect('?oauth_token=' + server_token, '&userId=' + req.user.id);
+}
 
 /**
  * OAuth callback

@@ -3,6 +3,12 @@
 /**
  * Send User
  */
+exports.user = function (req, res) {
+  console.log(req.user);
+  res.render('account', { user: req.user || null });
+};
+
 exports.me = function (req, res) {
-  res.render('account', { user: req.user });
+  console.log(req.user);
+  res.json(req.user || null);
 };

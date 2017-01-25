@@ -1,22 +1,27 @@
-var authentication = require('../controllers/authentication'),
+'use strict';
+
+/**
+ * Module dependencies
+ */
+ var authourization = require('../controllers/authourization'), 
   express = require('express'),
-  prayers = require('../controllers/prayer'),
+  prayer = require('../controllers/prayer'),
   router = express.Router();
 
 module.exports = function (app) {
-  app.use('/', router);
+  app.use('/api', router);
 };
 
 // Prayers collection routes
-  router.get('/prayers', prayers.list);
-  router.post('/prayers', authentication.requiresLogin, prayers.create);
+router.get('/prayer', prayer.list)
+router.post('/prayer', authourization.requiresLogin, prayer.create);
 
-  router.get('/prayers/:category', prayers.listByCategory);
+router.get('/category', prayer.listByCategory);
 
-  // Single prayer routes
-  router.get('/prayers/:prayerId', prayers.read)
-  router.put('/prayers/:prayerId', authentication.requiresLogin, prayers.update)
-  router.delete('/prayers/:prayerId', authentication.requiresLogin, prayers.hasAuthorization, prayers.delete);
+// Single prayer routes
+router.get('/prayer/:prayerId', authourization.requiresLogin, prayer.read)
+router.put('/prayer/:prayerId', authourization.requiresLogin, prayer.update)
+router.delete('/prayer/:prayerId', authourization.requiresLogin, prayer.hasAuthorization, prayer.delete);
 
-  // Finish by binding the prayer middleware
-  router.param('prayerId', prayers.prayerByID);
+// Finish by binding the prayer middleware
+router.param('prayerId', prayer.prayerByID);
