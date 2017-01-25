@@ -2,7 +2,7 @@
 
 var logger = require('mm-node-logger')(module),
   passport = require('passport'),
-  // jwt = require('jsonwebtoken'),
+  jwt = require('jsonwebtoken'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
@@ -18,12 +18,15 @@ exports.signout = function (req, res) {
  * getOauthToken 
  */
 exports.getOauthToken = function (req, res, next) {
-  // body...
-  // var userToken = req.query['accessToken'],
-  //   month = 43829,
-  //   server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
 
-  // res.redirect('?oauth_token=' + server_token, '&userId=' + req.user.id);
+  var userToken = req.query['accessToken'],
+    month = 43829,
+    server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
+
+  res.status(200).json({
+    'oauth_token=' : server_token, 
+    '&userId=' : req.user.id
+  });
 }
 
 /**
@@ -120,7 +123,7 @@ exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
 
       // And save the user
       user.save(function (err) {
-        return done(err, user, '/settings/accounts');
+        return done(err, user);
       });
     } else {
       return done(new Error('User is already connected using this provider'), user);
