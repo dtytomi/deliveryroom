@@ -4,9 +4,9 @@
  * Module dependencies
  */
 var path = require('path'),
+  logger = require('mm-node-logger')(module),
   mongoose = require('mongoose'),
-  Prayer = mongoose.model('Prayer'),
-  logger = require('mm-node-logger')(module);
+  Prayer = mongoose.model('Prayer');
 
 /**
  * Create an prayer
