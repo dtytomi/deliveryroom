@@ -69,8 +69,8 @@ module.exports = function(app, config) {
   app.use(methodOverride());
 
   var routers = glob.sync(config.root + '/app/routes/*.js');
-  routers.forEach(function (controller) {
-    require(controller)(app);
+  routers.forEach(function (router) {
+    require(router)(app);
   });
 
   app.use(function (req, res, next) {
