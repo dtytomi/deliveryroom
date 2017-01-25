@@ -23,10 +23,7 @@ exports.getOauthToken = function (req, res, next) {
     month = 43829,
     server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
 
-  res.status(200).json({
-    'oauth_token=' : server_token, 
-    '&userId=' : req.user.id
-  });
+  res.redirect('/users/me?oauth_token=' + server_token, '&userId=' + req.user.id);
 }
 
 /**
