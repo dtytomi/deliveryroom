@@ -1,41 +1,50 @@
 'use strict';
 
-var logger = require('mm-node-logger')(module),
- mongoose = require('mongoose'),
- config = require('./config');
+var glob = require('glob'), 
+  logger = require('mm-node-logger')(module),
+  mongoose = require('mongoose'),
+  path = require('path'),
+  config = require('./config');
 
-function createMongooseConnection(cb) {
-  // create the databaseconnection
+var pathUtils = require('../utils/path-utils');
+
+function createMongooseConnection (cb) {
+
+  pathUtils.getGlobbedPaths(path.join(__dirname, '../**/*.models.js'))
+  .forEach(function (routePath) {
+      require(path.resolve(routePath))(app);
+   });
+  
+  // create the database connection
   mongoose.connect(config.mongodb.dbURI, config.mongodb.dbOptions);
 
-  // When successfully connected
+  // when successfully connected
   mongoose.connection.on('connected', function () {
-    logger.info('Mongoose connected to ' + config.mongodb.dbURI);
-  });
-  
-  // If the conectionthrows an error
-  mongoose.connection.on('error', function (err) {
-    logger.error('Mongoose connection error: ' + err );
+      logger.info('Mongoose connected to ' + config.mongodb.dbURI);
   });
 
-  // When the connection is disconnected
+  // if the connection throws an error
+  mongoose.connection.on('error', function (err) {
+      logger.error('Mongoose connection error: ' + err);
+  });
+
+  // when the connection is disconnected
   mongoose.connection.on('disconnected', function () {
-    logger.info('Mongoose disconnected');
+      logger.info('Mongoose disconnected');
   });
 
   // when the connection is open
   mongoose.connection.once('open', function () {
-    if(cb && typeof (cb) === 'function') {cb();}
+      if(cb && typeof(cb) === 'function') {cb();}
   });
 
-  // If the Node process ends, close the mongoose connection
+  // if the Node process ends, close the Mongoose connection
   process.on('SIGINT', function() {
-    mongoose.connection.close(function () {
-      logger.info('Mongoose disconnected through app termination');
-      process.exit(0);
-    });
+      mongoose.connection.close(function () {
+          logger.info('Mongoose disconnected through app termination');
+          process.exit(0);
+      });
   });
-
 }
 
 module.exports = createMongooseConnection;

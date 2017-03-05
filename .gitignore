@@ -78,4 +78,8 @@ mongod
 *.suo
 *.ntvs*
 *.njsproj
+<<<<<<< HEAD
 *.sln
+=======
+*.sln
+>>>>>>> 84f521488ebceb86356d5db1e146020b878cd030

@@ -5,7 +5,6 @@ var logger = require('mm-node-logger')(module),
   config = require('../config/config'),
   jwt = require('jsonwebtoken'),
   compose = require('composable-middleware'),
-  User = require('../user/user.model'),
   expressJwt = require('express-jwt');
 
 var validateJwt = expressJwt({ secret: config.token.secret});
