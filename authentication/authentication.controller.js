@@ -37,7 +37,7 @@ function setTokenCokies(req, res, next) {
   
   var userToken = req.query['accessToken'],
    month = 43829,
-   server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || secret: config.token.secret, {expiresIn: month});
+   server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
 
   res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token, '&userId=' + req.user.id);
