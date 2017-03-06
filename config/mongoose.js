@@ -14,6 +14,8 @@ function createMongooseConnection (cb) {
   .forEach(function (routePath) {
       require(path.resolve(routePath))(app);
    });
+
+  mongoose.Promise = global.Promise;
   
   // create the database connection
   mongoose.connect(config.mongodb.dbURI, config.mongodb.dbOptions);
