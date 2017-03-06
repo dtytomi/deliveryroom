@@ -20,7 +20,7 @@ config.server = {
 };
 
 config.mongodb = {
-  dbURI: 'mongodb://127.0.0.1:27017/wap',
+  dbURI: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/wap',
   dbOptions: {"user":"", "pass": ""}
 };
 
@@ -34,20 +34,20 @@ config.redis = {
 };
 
 config.facebook = {
-  clientID: process.env.FACEBOOK_ID || 'FACEBOOK_ID',
-  clientSecret: process.env.FACEBOOK_SECRET || 'FACEBOOK_SECRET',
+  clientID: process.env.FACEBOOK_ID || '354198744940482',
+  clientSecret: process.env.FACEBOOK_SECRET || '449e52b9d61f2881bcd0eae50db73892',
   callbackURL: 'https://deliveryroom.mybluemix.net/auth/facebook/callback'
 };
 
 config.twitter = {
-  clientID: process.env.TWITTER_CONSUMER_KEY || 'TWITTER_CONSUMER_KEY',
-  clientSecret: process.env.TWITTER_CONSUMER_SECRET || 'TWITTER_CONSUMER_SECRET',
+  clientID: process.env.TWITTER_CONSUMER_KEY || 'yjTOaa6vVhNF5dOvL7xWpSwLU',
+  clientSecret: process.env.TWITTER_CONSUMER_SECRET || 'eSE0DC7ut1j36uVHqn9jU4WuSphwjD9pqpTPKW1w59AojUojQm',
   callbackURL:  'https://deliveryroom.mybluemix.net/auth/twitter/callback'
 };
 
 config.google = {
-  consumerKey: process.env.GOOGLE_CONSUMER_KEY || 'GOOGLE_CONSUMER_KEY',
-  consumerSecret: process.env.GOOGLE_CONSUMER_SECRET || 'GOOGLE_CONSUMER_SECRET',
+  consumerKey: process.env.GOOGLE_CONSUMER_KEY || '204495323984-4iu3ct14h2tlbu353mnlan2lghfpu17l.apps.googleusercontent.com',
+  consumerSecret: process.env.GOOGLE_CONSUMER_SECRET || 'RrtIynRQqg9TAY3vFQ9-oKr2',
   callbackURL: 'https://deliveryroom.mybluemix.net/auth/google/callback'
 };
 

@@ -35,6 +35,16 @@ function initMiddleware(app) {
   } else if (config.environment === 'production') {
     app.locals.cache = 'memory';
   }
+
+  // use express session and mongo-store
+  app.use(session({
+    secret: '1234567890QWERTY',
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    }),
+    resave: true,
+    saveUninitialized: true
+  }));
   
   // Request body parsing middleware sould be above methodOverride
   app.use(bodyParser.urlencoded({
