@@ -7,7 +7,7 @@ var logger = require('mm-node-logger')(module),
   compose = require('composable-middleware'),
   expressJwt = require('express-jwt');
 
-var validateJwt = expressJwt({ secret: config.token.secret});
+var validateJwt = expressJwt({ secret: process.env.SECRET || config.token.secret});
 
 function isAuthenticated(req, res, next) {
   return compose()
@@ -37,7 +37,7 @@ function setTokenCokies(req, res, next) {
   
   var userToken = req.query['accessToken'],
    month = 43829,
-   server_token = jwt.sign({id: req.user.id}, "secret", {expiresIn: month});
+   server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || secret: config.token.secret, {expiresIn: month});
 
   res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token, '&userId=' + req.user.id);

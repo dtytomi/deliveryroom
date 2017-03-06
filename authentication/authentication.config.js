@@ -25,7 +25,8 @@ module.exports = function(app) {
       require(path.resolve(strategy))(User, config)
     });
 
-    // Add passport's middleware
-    app.use(passport.initialize());
-    app.use(passport.session());
+  // Add passport's middleware
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
 };
