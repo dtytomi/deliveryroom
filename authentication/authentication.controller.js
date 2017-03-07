@@ -40,7 +40,7 @@ function setTokenCokies(req, res, next) {
    server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
 
   res.cookie('token', JSON.stringify(server_token));
-  res.redirect('/#/?oauth_token=' + server_token, '&userId=' + req.user.id);
+  res.redirect('/#/?oauth_token=' + server_token + '&userId=' + req.user._id);
 
 }
 
