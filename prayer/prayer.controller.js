@@ -14,7 +14,7 @@ function create(req, res) {
   prayer.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: logger.error(err)
       });
     } else {
       res.json(prayer);
@@ -48,7 +48,7 @@ function update(req, res) {
   prayer.save(function (err) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: logger.error(err)
       });
     } else { 
       res.json(prayer);
@@ -65,7 +65,7 @@ function destroy(req, res) {
   prayer.remove(function (err) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: logger.error(err)
       });
     } else {
       res.json(prayer);
@@ -80,7 +80,7 @@ function list(req, res) {
   Prayer.find().sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: logger.error(err)
       });
     } else {
       res.json(prayers);
@@ -95,7 +95,7 @@ function listByCategory(req, res) {
   Prayer.find({ category: req.query.category }).sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: logger.error(err)
       });
     } else {
       res.json(prayers);
