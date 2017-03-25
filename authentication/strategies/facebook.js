@@ -9,7 +9,7 @@ function setup(User, config) {
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
     passReqToCallback: true,
-    profileFields: ['id', 'emails', 'name'] 
+    profileFields: ['id', 'displayName', 'link', 'about_me', 'photos', 'emails']
   }, 
   function(accessToken, refreshToken, profile, done) {
     User.findOne({
