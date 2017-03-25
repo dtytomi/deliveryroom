@@ -7,7 +7,9 @@ function setup(User, config) {
   passport.use(new FacebookStrategy({
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
-    callbackURL: config.facebook.callbackURL 
+    callbackURL: config.facebook.callbackURL,
+    passReqToCallback: true,
+    profileFields: ['id', 'emails', 'name']
   }, 
   function(accessToken, refreshToken, profile, done) {
     User.findOne({
