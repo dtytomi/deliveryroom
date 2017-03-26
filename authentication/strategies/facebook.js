@@ -8,8 +8,7 @@ function setup(User, config) {
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
-    profileFields: ['id', 'displayName', 'link', 'photos', 'email'],
-    passReqToCallback: true
+    profileFields: ['id', 'displayName', 'link', 'photos', 'email']
   }, 
   function(accessToken, refreshToken, profile, done) {
     
