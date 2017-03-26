@@ -12,6 +12,9 @@ function setup(User, config) {
     passReqToCallback: true
   }, 
   function(accessToken, refreshToken, profile, done) {
+    
+    console.log(profile);
+
     User.findOne({
       'facebook.id': profile.id
     }, 
