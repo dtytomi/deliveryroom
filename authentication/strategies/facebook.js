@@ -8,8 +8,8 @@ function setup(User, config) {
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
-    passReqToCallback: true,
-    profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
+    profileFields: ['id', 'displayName', 'link', 'photos', 'email'],
+    passReqToCallback: true
   }, 
   function(accessToken, refreshToken, profile, done) {
     User.findOne({
@@ -34,7 +34,7 @@ function setup(User, config) {
           return done(err, user);
         })
       } else {
-        return done(err, user);
+        return done(null, user);
       }
     })
   }
