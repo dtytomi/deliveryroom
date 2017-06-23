@@ -1,10 +1,9 @@
 'use strict';
 
-var user = require('./user.controller'),
- authentication = require('../authentication/authentication.controller');
+var user = require('./user.controller');
 
 function setUserRoutes(app) {
-  app.route('/me').get(authentication.isAuthenticated(), user.me);
+  app.route('/me').get( user.me);
 }
 
 module.exports = setUserRoutes;
