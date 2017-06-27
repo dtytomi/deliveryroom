@@ -40,7 +40,6 @@ var UserSchema = new Schema({
     default: 'user'
   },
 
-  hashedPassword: String,
   provider: {
     type: String,
     required: 'Provider is required'
