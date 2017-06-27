@@ -103,15 +103,6 @@ function listByCategory(req, res) {
   });
 };
 
-/**
-** Prayer authorization middleware
-**/
-function hasAuthorization(req, res, next) {
-  if (req.prayer.user.id !== req.user.id) {
-    return res.send(403, 'User is not authorized');
-  }
-  next();
-};
 
 /**
 ** Prayer middleware
@@ -144,6 +135,5 @@ module.exports = {
   update: update,
   list: list,
   listByCategory: listByCategory,
-  hasAuthorization: hasAuthorization,
   prayerByID: prayerByID
 };

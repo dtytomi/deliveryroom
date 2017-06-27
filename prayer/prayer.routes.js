@@ -14,7 +14,7 @@ function setPrayerRoutes(app) {
   app.route('/prayer/:prayerId')
     .get(authentication.isAuthenticated(), prayer.read)
     .put(authentication.isAuthenticated(), prayer.update)
-    .delete(authentication.isAuthenticated(), prayer.hasAuthorization(), prayer.destroy );
+    .delete(authentication.isAuthenticated(), prayer.destroy );
   
   // Finish by binding the prayer middleware
   app.param('prayerId', prayer.prayerByID);
