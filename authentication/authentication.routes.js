@@ -5,9 +5,9 @@ var passport = require('passport');
 
 function setAuthenticationRoutes(app) {
 
-  app.route('/auth/signin').post(authentication.signin);
-  app.route('/auth/signout').get(authentication.signout);
-  app.route('/auth/signup').post(authentication.signup);
+  app.post('/auth/signin', authentication.signin);
+  app.get('/auth/signout', authentication.signout);
+  app.post('/auth/signup', authentication.signup);
 
 	app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email']
@@ -34,6 +34,11 @@ function setAuthenticationRoutes(app) {
     failureRedirect: '/signup',
     session: false
   }), authentication.setTokenCokies);
+
+  app.get('/token', authentication.isAuthenticated, function (req, res) {
+      res.send({ content: 'Success'});
+  });
+
 }
 
 module.exports = setAuthenticationRoutes;
