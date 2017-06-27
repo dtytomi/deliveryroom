@@ -12,4 +12,7 @@ redisClient.on('error', function (err) {
   logger.error('Redis error: ' + err);
 });
 
+if (config.redis.options.password != '') {
+  redisClient.auth(credentials.password);
+}
 module.exports = redisClient;

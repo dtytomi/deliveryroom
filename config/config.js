@@ -36,7 +36,7 @@ config.redis = {
   host: getCred('Redis Cloud-a2', 'hostname') || '127.0.0.1',
   port: getCred('Redis Cloud-a2', 'port') || 6379,
   options: {
-    "password": getCred('Redis Cloud-a2', 'password')
+    "password": getCred('Redis Cloud-a2', 'password') || ''
   }
 };
 
