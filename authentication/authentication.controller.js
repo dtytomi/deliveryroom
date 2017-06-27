@@ -105,7 +105,7 @@ function isAuthenticated(req, res, next) {
       validateJwt(req, res, next);
     })
     // Attach user to request
-    .use(function(req, res, next) {
+    .use(function(req, res, next) { 
       User.findById(req.user._id, function (err, user) {
         if (err) return next(err);
         if (!user) return res.send(401);

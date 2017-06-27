@@ -1,6 +1,13 @@
 'use strict';
 
 var config = {};
+var cfenv = require('cfenv'),
+  appEnv = cfenv.getAppEnv();
+
+var getCred = function (serviceName, credProp) {
+  return appEnv.getService(serviceName) ?
+    appEnv.getService(serviceName).credentials[credProp] : undefined;
+};
 
 config.environment = process.env.NODE_ENV || 'development';
 
@@ -26,10 +33,10 @@ config.mongodb = {
 
 // Redis settings
 config.redis = {
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: process.env.REDIS_PORT || 6379,
+  host: getCred('Redis Cloud-a2', 'hostname') || '127.0.0.1',
+  port: getCred('Redis Cloud-a2', 'port') || 6379,
   options: {
-  
+    "password": getCred('Redis Cloud-a2', 'password')
   }
 };
 
