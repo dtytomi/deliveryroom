@@ -13,6 +13,6 @@ redisClient.on('error', function (err) {
 });
 
 if (config.redis.options.password != '') {
-  redisClient.auth(credentials.password);
+  redisClient.auth(config.redis.options.password);
 }
 module.exports = redisClient;
