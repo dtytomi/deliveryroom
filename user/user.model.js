@@ -7,21 +7,44 @@ var mongoose = require('mongoose'),
 var authTypes = ['google', 'facebook', 'twitter'];
 var SALT_WORK_FACTOR = 10;
 
+var validateLocalStrategyProperty = function (property) {
+  return ((this.provider !== 'local' && !this.updated) || property.lenght);
+};
+
 var UserSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    trim: true,
+    validate: [validateLocalStrategyProperty, 'Please fill in your name']
+  },
   email: {
     type: String,
     trim: true,
     lowercase: true,
-    unique: true
+    unique: true,
+    validate: [validateLocalStrategyProperty, 'Please fill in your email'],
+    match: [/.+\@.+\..+/, 'Please fill a valid email address']
   },
+
+  password: {
+      type: String,
+      required: true
+  },
+
+  salt: {
+      type: String
+  },
+
   role: {
     type: String,
     default: 'user'
   },
 
   hashedPassword: String,
-  provider: String,
+  provider: {
+    type: String,
+    required: 'Provider is required'
+  },
   facebook: {},
   google: {},
   twitter: {},
@@ -36,14 +59,14 @@ var UserSchema = new Schema({
  * Virtuals
  * */
 
-UserSchema
-  .virtual('password')
-  .set(function(password) {
-    this._password = password;
-  })
-  .get(function() {
-    return this._password;
-  });
+// UserSchema
+//   .virtual('password')
+//   .set(function(password) {
+//     this._password = password;
+//   })
+//   .get(function() {
+//     return this._password;
+//   });
 
 // Public profile informatin
 UserSchema
@@ -80,11 +103,11 @@ UserSchema
 
 // Validate empty password
 UserSchema
-  .path('hashedPassword')
-  .validate(function(hashedPassword) {
+  .path('password')
+  .validate(function(password) {
     if (authTypes.indexOf(this.provider) !== -1) 
       return true;
-    return hashedPassword.length;
+    return password.length;
   }, 'Password cannot be blank');
 
 // Validate email is not taken

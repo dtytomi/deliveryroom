@@ -5,7 +5,7 @@ var redis = require('redis'),
 var redisClient = redis.createClient(config.redis.port, config.redis.host);
 
 redisClient.on('connect', function () {
-  logger.info('Reddis connected to' + config.redis.host + ':' config.redis.port);
+  logger.info('Reddis connected to ' + config.redis.host + ':' + config.redis.port);
 });
 
 redisClient.on('error', function (err) {

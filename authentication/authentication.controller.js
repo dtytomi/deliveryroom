@@ -5,9 +5,94 @@ var logger = require('mm-node-logger')(module),
   config = require('../config/config'),
   jwt = require('jsonwebtoken'),
   compose = require('composable-middleware'),
-  expressJwt = require('express-jwt');
+  expressJwt = require('express-jwt'),
+  token    = require('./token.controller.js'),
+  User     = require('../user/user.model.js');
 
 var validateJwt = expressJwt({ secret: process.env.SECRET || config.token.secret});
+
+function signin (req, res, next) {
+  // body...
+  passport.authenticate('local', function (err, user, info) {
+    // body...
+    var error = err || info;
+    if (error)  return res.status(401).send(error);
+
+    // remove sensitive data before login 
+    user.passport = undefined;
+    user.salt = undefined;
+
+    token.createToken(user, function (res, err, token) {
+      // body...
+      if (err) {
+        
+        logger.error(err);
+        return res.status(400).send(err);
+      }
+
+      res.status(201).json({token: token});
+    }.bind(null, res));
+  })(req, res, next);
+}
+
+function signout (req, res) {
+  // body...
+  token.expireToken(req.headers, function (err, success) {
+    
+    if (err) {
+      logger.error(err.message);
+      return res.status(401).send(err.message);
+    }
+
+    if (success) {
+      delete req.user;
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
+
+  });
+}
+
+function signup (req, res) {
+  // body...
+  var email = req.body.email || '';
+  var password = req.body.password || '';
+
+  if (email == '' || password == '') {
+    return res.sendStatus(400);
+  }
+
+  // Init Variables
+  var user = new User (req.body);
+  // add missing user field
+  user.provider = 'local';
+
+  // Then save the user 
+  user.save(function (err, user) {
+    
+    if (err) {
+      logger.error(err.message);
+      return res.status(400).send(err);
+    } else {
+      // Remove sensitive data before login
+      user.password = undefined;
+      user.salt = undefined;
+
+      token.createToken(user, function (res, err, token) {
+        // body...
+        if (err) {
+          logger.error(err.message);
+          return res.status(400).send(err);
+        } 
+
+        res.status(201).json({token: token});
+      }.bind(null, res));
+
+    }
+  });
+
+}
 
 function isAuthenticated(req, res, next) {
   return compose()
@@ -45,6 +130,9 @@ function setTokenCokies(req, res, next) {
 }
 
 module.exports = {
+  signin: signin,
+  signout: signout,
+  signup: signup,
   setTokenCokies: setTokenCokies,
   isAuthenticated: isAuthenticated
 };

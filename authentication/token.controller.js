@@ -10,7 +10,7 @@ function extractTokenFromHeader (headers) {
 
   var authorization = headers.authorization;
   var authArr = authorization.split(' ');
-  if (authArr.length !== 2) throw new Error('Authorization header is not of length 2'))
+  if (authArr.length !== 2) throw new Error('Authorization header is not of length 2');
   
   var token = authArr[1];
 
@@ -35,7 +35,7 @@ function createToken (payload, cb) {
   }
   
   var token = jwt.sign(payload, config.token.secret, {
-    expiresInMinutes: config.token.expiration
+    expiresIn: config.token.expiration
   });
 
   // stores a token with payload data for a ttl period of time
