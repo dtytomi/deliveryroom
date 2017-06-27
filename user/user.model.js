@@ -12,38 +12,34 @@ var validateLocalStrategyProperty = function (property) {
 };
 
 var UserSchema = new Schema({
-  name: {
-    type: String,
-    trim: true,
-    validate: [validateLocalStrategyProperty, 'Please fill in your name']
-  },
+  name: String,
   email: {
     type: String,
-    trim: true,
     lowercase: true,
-    unique: true,
-    validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-    match: [/.+\@.+\..+/, 'Please fill a valid email address']
+    required() {
+      if(authTypes.indexOf(this.provider) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
-
-  password: {
-      type: String,
-      required: true
-  },
-
-  salt: {
-      type: String
-  },
-
   role: {
     type: String,
     default: 'user'
   },
-
-  provider: {
+  password: {
     type: String,
-    required: 'Provider is required'
+    required() {
+      if(authTypes.indexOf(this.provider) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
+  provider: String,
+  salt: String,
   facebook: {},
   google: {},
   twitter: {},
