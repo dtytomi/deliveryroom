@@ -25,10 +25,14 @@ function setup(User, config) {
           username: profile.username,
           twitter: profile._json
         });
-        user.save(function(err) {
-          if(err) done(err);
-          return done(err, user);
-        })
+        user.saveAsync()
+          .then(saveResult => {
+              // mongoose save returns (err, obj, numaffected)
+              // bluebird only expects 2 arguments so it wraps the extras in an array
+              var user = saveResult[0];
+              return done(null, user);
+           })
+          .catch(err => done(err));
       } else {
         return done(err, user);
       }
