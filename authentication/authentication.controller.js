@@ -67,6 +67,7 @@ function signup (req, res) {
   var user = new User (req.body);
   // add missing user field
   user.provider = 'local';
+  var server_token = '';
 
   // Then save the user 
   user.save(function (err, user) {
@@ -86,9 +87,9 @@ function signup (req, res) {
           return res.status(400).send(err);
         } 
 
-        res.status(201).json({token: token});
+        server = res.status(201).json({token: token});
       }.bind(null, res));
-
+      console.log(server);
     }
   });
 
@@ -128,15 +129,8 @@ function isAuthenticated(req, res, next) {
 
 }
 
-function setTokenCokies(req, res, next) {
-  if (!req.user) 
-    return res.json(404, { message: 'Something went wrong, please try again.'});
-  
-  // var userToken = req.query['accessToken'],
-  //  month = 43829,
-  //  server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
-
-   var server_token = token.createToken(req.user, function (res, err, token) {
+function signToken(req, res) {
+  return token.createToken(req.user, function (res, err, token) {
       // body...
       if (err) {
         
@@ -146,6 +140,17 @@ function setTokenCokies(req, res, next) {
 
       res.status(201).json({token: token});
     }.bind(null, res));
+}
+
+function setTokenCokies(req, res, next) {
+  if (!req.user) 
+    return res.json(404, { message: 'Something went wrong, please try again.'});
+  
+  // var userToken = req.query['accessToken'],
+  //  month = 43829,
+  //  server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
+
+   var server_token = signToken(req, res);
 
   res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token + '&userId=' + req.user._id);
@@ -156,6 +161,7 @@ module.exports = {
   signin: signin,
   signout: signout,
   signup: signup,
+  signToken: signToken,
   setTokenCokies: setTokenCokies,
   isAuthenticated: isAuthenticated
 };
