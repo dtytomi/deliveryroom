@@ -130,12 +130,10 @@ function isAuthenticated(req, res, next) {
 }
 
 function signToken(req, res) {
-  console.log('I got into signToken');
-  console.log(req.user);
   token.createToken(req.user, function (res, err, token) {
       // body...
       if (err) {
-        
+        console.log('I was the cause');
         logger.error(err);
         return res.status(400).send(err);
       }
