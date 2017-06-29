@@ -3,6 +3,8 @@
 var authentication = require('./authentication.controller');
 var passport = require('passport');
 
+var requireAuth = passport.authenticate('jwt', {session: false});
+
 function setAuthenticationRoutes(app) {
 
   app.post('/auth/signin', authentication.signin);
@@ -35,7 +37,7 @@ function setAuthenticationRoutes(app) {
     session: false
   }), authentication.setTokenCokies);
 
-  app.get('/token',  passport.authenticate('jwt', { session: false }), function (req, res) {
+  app.get('/token',  requireAuth, function (req, res) {
       res.send({ content: 'Success'});
   });
 

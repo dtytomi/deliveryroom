@@ -1,20 +1,23 @@
 'use strict';
 
 var prayer = require('./prayer.controller'),
- authentication = require('../authentication/authentication.controller');
+  passport = require('passport'),
+  authentication = require('../authentication/authentication.controller');
+
+var requireAuth = passport.authenticate('jwt', {session: false});
 
 function setPrayerRoutes(app) {
   app.route('/prayer')
     .get(prayer.list)
-    .post(authentication.isAuthenticated, prayer.create);
+    .post(requireAuth, prayer.create);
 
   app.route('/category')
     .get(prayer.listByCategory);
 
   app.route('/prayer/:prayerId')
-    .get(authentication.isAuthenticated, prayer.read)
-    .put(authentication.isAuthenticated, prayer.update)
-    .delete(authentication.isAuthenticated, prayer.destroy );
+    .get(requireAuth, prayer.read)
+    .put(requireAuth, prayer.update)
+    .delete(requireAuth, prayer.destroy );
   
   // Finish by binding the prayer middleware
   app.param('prayerId', prayer.prayerByID);
