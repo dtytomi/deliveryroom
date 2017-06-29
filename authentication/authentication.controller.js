@@ -89,7 +89,7 @@ function signup (req, res) {
 
         res.status(201).json({token: token});
       }.bind(null, res));
-     
+
     }
   });
 
@@ -130,7 +130,7 @@ function isAuthenticated(req, res, next) {
 }
 
 function signToken(req, res) {
-  return token.createToken(req.user, function (res, err, token) {
+  token.createToken(req.user, function (res, err, token) {
       // body...
       if (err) {
         
@@ -138,7 +138,7 @@ function signToken(req, res) {
         return res.status(400).send(err);
       }
 
-      res.status(201).json({token});
+      return res.status(201).json({token});
     }.bind(null, res));
 }
 
