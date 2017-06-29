@@ -156,9 +156,7 @@ function setTokenCokies(req, res, next) {
 
    console.log(server_token);
 
-  res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token.token + '&userId=' + req.user._id);
-
 }
 
 module.exports = {
