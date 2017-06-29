@@ -87,9 +87,9 @@ function signup (req, res) {
           return res.status(400).send(err);
         } 
 
-        server = res.status(201).json({token: token});
+        res.status(201).json({token: token});
       }.bind(null, res));
-      console.log(server);
+     
     }
   });
 
@@ -151,6 +151,8 @@ function setTokenCokies(req, res, next) {
   //  server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
 
    var server_token = signToken(req, res);
+
+   console.log(server_token);
 
   res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token + '&userId=' + req.user._id);
