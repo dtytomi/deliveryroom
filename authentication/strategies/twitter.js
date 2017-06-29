@@ -26,10 +26,10 @@ function setup(User, config) {
           twitter: profile._json
         });
         user.saveAsync()
-          .then(saveResult => {
+          .then(function (result) {
               // mongoose save returns (err, obj, numaffected)
               // bluebird only expects 2 arguments so it wraps the extras in an array
-              var user = saveResult[0];
+              var user = result[0];
               return done(null, user);
            })
           .catch(err => done(err));
