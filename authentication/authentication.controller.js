@@ -130,6 +130,8 @@ function isAuthenticated(req, res, next) {
 }
 
 function signToken(req, res) {
+  console.log('I got into signToken');
+  console.log(req.user);
   token.createToken(req.user, function (res, err, token) {
       // body...
       if (err) {
@@ -137,8 +139,8 @@ function signToken(req, res) {
         logger.error(err);
         return res.status(400).send(err);
       }
-
-      return res.status(201).json({token});
+      console.log('I am saved by Jesus');
+      return res.status(201).json({token: token});
     }.bind(null, res));
 }
 
@@ -155,7 +157,7 @@ function setTokenCokies(req, res, next) {
    console.log(server_token);
 
   res.cookie('token', JSON.stringify(server_token));
-  res.redirect('/#/?oauth_token=' + server_token + '&userId=' + req.user._id);
+  res.redirect('/#/?oauth_token=' + server_token.token + '&userId=' + req.user._id);
 
 }
 
