@@ -138,7 +138,7 @@ function signToken(req, res) {
         return res.status(400).send(err);
       }
 
-      res.status(201).json({token: token});
+      res.status(201).json({token});
     }.bind(null, res));
 }
 
