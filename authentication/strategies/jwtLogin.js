@@ -8,7 +8,7 @@ var passport = require('passport'),
 function jwtLogin (User, config) {
 
   var jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeader(),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     secretOrKey: process.env.SECRET || config.token.secret
   };
   
