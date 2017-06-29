@@ -6,15 +6,15 @@ var prayer = require('./prayer.controller'),
 function setPrayerRoutes(app) {
   app.route('/prayer')
     .get(prayer.list)
-    .post(authentication.isAuthenticated(), prayer.create);
+    .post(authentication.isAuthenticated, prayer.create);
 
   app.route('/category')
     .get(prayer.listByCategory);
 
   app.route('/prayer/:prayerId')
-    .get(authentication.isAuthenticated(), prayer.read)
-    .put(authentication.isAuthenticated(), prayer.update)
-    .delete(authentication.isAuthenticated(), prayer.destroy );
+    .get(authentication.isAuthenticated, prayer.read)
+    .put(authentication.isAuthenticated, prayer.update)
+    .delete(authentication.isAuthenticated, prayer.destroy );
   
   // Finish by binding the prayer middleware
   app.param('prayerId', prayer.prayerByID);

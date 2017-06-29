@@ -4,8 +4,7 @@ var passport = require('passport'),
   passportJWT = require("passport-jwt"),
   LocalStrategy = require('passport-local').Strategy;
 
-var jwt = require('jsonwebtoken'),
-  ExtractJwt = passportJWT.ExtractJwt,
+var ExtractJwt = passportJWT.ExtractJwt,
   JwtStrategy = passportJWT.Strategy;
 
 function localStrategy (User, config) {
@@ -50,9 +49,9 @@ function localStrategy (User, config) {
 
 function jwtLogin (User, config) {
 
-var jwtOptions = {}
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions = { secret: process.env.SECRET || config.token.secret};
+  var jwtOptions = {}
+  jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+  jwtOptions = { secret: process.env.SECRET || config.token.secret};
   // body...
   passport.use(new JwtStrategy(jwtOptions, function (payload, done) {
     // body...

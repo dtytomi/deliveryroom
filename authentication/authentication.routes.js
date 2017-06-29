@@ -39,6 +39,8 @@ function setAuthenticationRoutes(app) {
       res.send({ content: 'Success'});
   });
 
+  app.get('/auth', authentication.isAuthenticated);
+
 }
 
 module.exports = setAuthenticationRoutes;

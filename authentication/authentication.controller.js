@@ -95,34 +95,57 @@ function signup (req, res) {
 }
 
 function isAuthenticated(req, res, next) {
-  return compose()
-    // Validate jwt
-    .use(function(req, res, next) {
-      // allow access_token to be passed through query parameter as well
-      if(req.query && req.query.hasOwnProperty('access_token')) {
-        req.headers.authorization = `Bearer ${req.query.access_token}`;
-      }
-      validateJwt(req, res, next);
-    })
-    // Attach user to request
-    .use(function(req, res, next) { 
-      User.findById(req.user._id, function (err, user) {
-        if (err) return next(err);
-        if (!user) return res.send(401);
+  // return compose()
+  //   // Validate jwt
+  //   .use(function(req, res, next) {
+  //     // allow access_token to be passed through query parameter as well
+  //     if(req.query && req.query.hasOwnProperty('access_token')) {
+  //       req.headers.authorization = `Bearer ${req.query.access_token}`;
+  //     }
+  //     validateJwt(req, res, next);
+  //   })
+  //   // Attach user to request
+  //   .use(function(req, res, next) { 
+  //     User.findById(req.user._id, function (err, user) {
+  //       if (err) return next(err);
+  //       if (!user) return res.send(401);
 
-        req.user = user;
+  //       req.user = user;
+  //       next();
+  //    });
+  //   });
+  
+  token.verifyToken(req.headers, function(next, err, data) {
+        if (err) {
+            logger.error(err.message);
+            return res.status(401).send(err.message);
+        }
+
+        req.user = data;
+
         next();
-     });
-    });
+    }.bind(null, next));
+
 }
 
 function setTokenCokies(req, res, next) {
   if (!req.user) 
     return res.json(404, { message: 'Something went wrong, please try again.'});
   
-  var userToken = req.query['accessToken'],
-   month = 43829,
-   server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
+  // var userToken = req.query['accessToken'],
+  //  month = 43829,
+  //  server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
+
+   var server_token = token.createToken(req.user, function (res, err, token) {
+      // body...
+      if (err) {
+        
+        logger.error(err);
+        return res.status(400).send(err);
+      }
+
+      res.status(201).json({token: token});
+    }.bind(null, res));
 
   res.cookie('token', JSON.stringify(server_token));
   res.redirect('/#/?oauth_token=' + server_token + '&userId=' + req.user._id);

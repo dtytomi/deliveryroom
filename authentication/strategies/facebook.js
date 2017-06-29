@@ -4,6 +4,7 @@ var passport = require('passport'),
  FacebookStrategy = require('passport-facebook').Strategy;
 
 function setup(User, config) {
+  
   passport.use(new FacebookStrategy({
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
