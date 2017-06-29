@@ -35,10 +35,6 @@ function setAuthenticationRoutes(app) {
     session: false
   }), authentication.setTokenCokies);
 
-  app.get('/token', authentication.isAuthenticated, function (req, res) {
-      res.send({ content: 'Success'});
-  });
-
 }
 
 module.exports = setAuthenticationRoutes;

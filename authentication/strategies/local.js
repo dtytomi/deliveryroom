@@ -1,7 +1,12 @@
 'use strict';
 
 var passport = require('passport'),
+  passportJWT = require("passport-jwt"),
   LocalStrategy = require('passport-local').Strategy;
+
+var jwt = require('jsonwebtoken'),
+  ExtractJwt = passportJWT.ExtractJwt,
+  JwtStrategy = passportJWT.Strategy;
 
 function localStrategy (User, config) {
   // body...
@@ -43,4 +48,31 @@ function localStrategy (User, config) {
   );
 }
 
+function jwtLogin (User, config) {
+
+var jwtOptions = {}
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+jwtOptions = { secret: process.env.SECRET || config.token.secret};
+  // body...
+  passport.use(new JwtStrategy(jwtOptions, function (payload, done) {
+    // body...
+      User.findById(payload._id, function (err, user) {
+        
+        if (err) 
+          return done(err, false);
+        
+        if (user) {
+          done(null, user);
+        } else{
+
+          done(null, false);
+        }
+
+      });
+
+    })
+  );
+}
+
+module.exports = jwtLogin;
 module.exports = localStrategy;
