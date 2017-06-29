@@ -35,6 +35,10 @@ function setAuthenticationRoutes(app) {
     session: false
   }), authentication.setTokenCokies);
 
+  app.get('/token',  passport.authenticate('jwt', { session: false }), function (req, res) {
+      res.send({ content: 'Success'});
+  });
+
 }
 
 module.exports = setAuthenticationRoutes;
