@@ -29,13 +29,8 @@ function setup(User, config) {
           facebook: profile._json
         });
         user.facebook.accessToken = accessToken;
-        user.saveAsync()
-          .then(function (result) {
-              // mongoose save returns (err, obj, numaffected)
-              // bluebird only expects 2 arguments so it wraps the extras in an array
-              var user = result[0];
-              return done(null, user);
-           })
+        user.save()
+          .then(savedUser => done(null, savedUser))
           .catch(err => done(err));
       } else {
         return done(err, user);
