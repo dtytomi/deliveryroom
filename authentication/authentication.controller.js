@@ -11,6 +11,13 @@ var logger = require('mm-node-logger')(module),
 
 var validateJwt = expressJwt({ secret: process.env.SECRET || config.token.secret});
 
+function generateToken(user){
+    return jwt.sign(user, config.token.secret, {
+        expiresIn: 10080
+    });
+}
+ 
+
 function signin (req, res, next) {
   // body...
   passport.authenticate('local', function (err, user, info) {
@@ -79,6 +86,7 @@ function signup (req, res) {
       user.password = undefined;
       user.salt = undefined;
 
+      
       token.createToken(user, function (res, err, token) {
         // body...
         if (err) {
