@@ -10,12 +10,6 @@ var logger = require('mm-node-logger')(module),
   User     = require('../user/user.model.js');
 
 var validateJwt = expressJwt({ secret: process.env.SECRET || config.token.secret});
-
-function generateToken(user){
-    return jwt.sign(user, config.token.secret, {
-        expiresIn: 10080
-    });
-}
  
 
 function signin (req, res, next) {
