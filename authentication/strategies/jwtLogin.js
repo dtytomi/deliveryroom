@@ -14,8 +14,7 @@ function jwtLogin (User, config) {
   };
   
   // body...
-  passport.use('jwt', new JwtStrategy(jwtOptions, function (payload, done) {
-    console.log(payload._doc._id);
+  passport.use('jwt', new JwtStrategy(jwtOptions, function ( payload, done) {
     // body...
     
       User.findById(payload._doc._id, function (err, user) {
@@ -23,15 +22,14 @@ function jwtLogin (User, config) {
         
         
         if (err) {
-          console.log(err)
-          console.log('I narrowly got in here');
+          console.error(err)
           return done(err, false);
         }
         if (user) {
-          console.log("I got into user");
+          
           done(null, user);
         } else{
-          console.log("I got into falsehood");
+          
           done(null, false);
         }
 

@@ -10,7 +10,12 @@ var logger = require('mm-node-logger')(module),
   User     = require('../user/user.model.js');
 
 var validateJwt = expressJwt({ secret: process.env.SECRET || config.token.secret});
- 
+
+function generateToken(user){
+    return jwt.sign(user, process.env.SECRET || config.token.secret, {
+        expiresIn: 10080
+    });
+}
 
 function signin (req, res, next) {
   // body...
@@ -122,9 +127,7 @@ function setTokenCokies(req, res, next) {
   if (!req.user) 
     return res.json(404, { message: 'Something went wrong, please try again.'});
   
-  var userToken = req.query['accessToken'],
-   month = 43829,
-   server_token = jwt.sign({id: req.user._id}, process.env.SECRET  || config.token.secret, {expiresIn: month});
+  var server_token = 'JWT ' + generateToken(req.user);
 
    
   res.cookie('token', JSON.stringify(server_token));
@@ -133,6 +136,7 @@ function setTokenCokies(req, res, next) {
 }
 
 module.exports = {
+  generateToken: generateToken,
   signin: signin,
   signout: signout,
   signup: signup,
