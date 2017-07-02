@@ -16,7 +16,8 @@ function jwtLogin (User, config) {
   // body...
   passport.use('jwt', new JwtStrategy(jwtOptions, function ( payload, done) {
     // body...
-    
+      console.log(payload);
+
       User.findById(payload._doc._id, function (err, user) {
 
         

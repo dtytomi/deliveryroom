@@ -28,16 +28,22 @@ function signin (req, res, next) {
     user.passport = undefined;
     user.salt = undefined;
 
-    token.createToken(user, function (res, err, token) {
-      // body...
-      if (err) {
+    // token.createToken(user, function (res, err, token) {
+    //   // body...
+    //   if (err) {
         
-        logger.error(err);
-        return res.status(400).send(err);
-      }
+    //     logger.error(err);
+    //     return res.status(400).send(err);
+    //   }
 
-      res.status(201).json({token: token});
-    }.bind(null, res));
+    //   res.status(201).json({token: token});
+    // }.bind(null, res));
+
+    res.status(200).json({
+        token: 'JWT ' + generateToken(user),
+        user: user
+    });
+
   })(req, res, next);
 }
 
