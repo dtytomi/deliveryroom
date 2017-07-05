@@ -77,7 +77,7 @@ function destroy(req, res) {
 ** List of Prayer
 **/
 function list(req, res) {
-  Prayer.find().sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
+  Prayer.find().sort('-created').populate('user', 'name facebook twitter').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
         message: logger.error(err)
@@ -92,7 +92,7 @@ function list(req, res) {
 ** List of Prayer by category
 **/
 function listByCategory(req, res) {
-  Prayer.find({ category: req.query.category }).sort('-created').populate('user', 'displayName').exec(function (err, prayers) {
+  Prayer.find({ category: req.query.category }).sort('-created').populate('user', 'name facebook twitter').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
         message: logger.error(err)
