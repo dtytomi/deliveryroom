@@ -11,7 +11,7 @@ function setPrayerRoutes(app) {
     .get(prayer.list)
     .post(requireAuth, prayer.create);
 
-  app.route('/category')
+  app.route('/prayer/:category')
     .get(prayer.listByCategory);
 
   app.route('/prayer/:prayerId')
