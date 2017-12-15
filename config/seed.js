@@ -26,7 +26,8 @@ Prayer.find({}).remove(function() {
     content: 'God helped me',
     prayer: 'God help me',
     title: 'God\'s help',
-    category: 'Needs'
+    category: 'Needs',
+    user: testUserId
   }, function() {
     logger.info('Finished populating prayers');
   });
