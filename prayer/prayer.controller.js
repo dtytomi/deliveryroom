@@ -77,7 +77,7 @@ function destroy(req, res) {
 ** List of Prayer
 **/
 function list(req, res) {
-  Prayer.find().sort('-created').populate('user', 'name facebook twitter').exec(function (err, prayers) {
+  Prayer.find().sort('-created').populate('user', 'name provider facebook twitter').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
         message: logger.error(err)
