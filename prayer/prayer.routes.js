@@ -7,14 +7,14 @@ var prayer = require('./prayer.controller'),
 var requireAuth = passport.authenticate('jwt', {session: false});
 
 function setPrayerRoutes(app) {
-  app.route('/prayer')
+  app.route('/prayers')
     .get(prayer.list)
     .post(requireAuth, prayer.create);
 
-  app.route('/prayer/:category')
+  app.route('/prayers/:category')
     .get(prayer.listByCategory);
 
-  app.route('/prayer/:prayerId')
+  app.route('/prayers/:prayerId')
     .get(requireAuth, prayer.read)
     .put(requireAuth, prayer.update)
     .delete(requireAuth, prayer.destroy );

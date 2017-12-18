@@ -83,6 +83,7 @@ function list(req, res) {
         message: logger.error(err)
       });
     } else {
+      logger.info('Ayo');
       res.json(prayers);
     }
   });
@@ -92,12 +93,13 @@ function list(req, res) {
 ** List of Prayer by category
 **/
 function listByCategory(req, res) {
-  Prayer.find({ category: req.query.category }).sort('-created').populate('user', 'name facebook twitter').exec(function (err, prayers) {
+  Prayer.find({ category: req.params.category }).sort('-created').populate('user', 'name facebook twitter').exec(function (err, prayers) {
     if (err) {
       return res.status(400).send({
         message: logger.error(err)
       });
     } else {
+      logger.info('Category');
       res.json(prayers);
     }
   });
