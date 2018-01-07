@@ -83,7 +83,7 @@ function list(req, res) {
         message: logger.error(err)
       });
     } else {
-      logger.info('Ayo');
+      
       res.json(prayers);
     }
   });
@@ -99,7 +99,7 @@ function listByCategory(req, res) {
         message: logger.error(err)
       });
     } else {
-      logger.info('Category');
+      
       res.json(prayers);
     }
   });
